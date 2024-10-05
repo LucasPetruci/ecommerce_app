@@ -38,6 +38,13 @@ class CartPage extends StatelessWidget {
                 },
               ),
             ),
+            Text(
+              'Total: R\$ ${value.getTotalPrice()}',
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ],
         ),
       ),
