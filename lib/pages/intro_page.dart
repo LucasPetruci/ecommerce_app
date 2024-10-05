@@ -36,7 +36,7 @@ class IntroPage extends StatelessWidget {
             //sub title
 
             const Text(
-              "Brand new sneakers ",
+              "Tênis novos",
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.grey,

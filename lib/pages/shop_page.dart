@@ -62,7 +62,7 @@ class _ShopPageState extends State<ShopPage> {
             ),
           ),
 
-          //hot picks
+          //Mais escolhidos
 
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 25.0),
@@ -71,7 +71,7 @@ class _ShopPageState extends State<ShopPage> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  "Hot Picks 🔥",
+                  "Mais escolhidos 🔥",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
                 ),
                 Text(
