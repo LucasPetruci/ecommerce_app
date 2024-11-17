@@ -16,7 +16,7 @@ class CartItem extends StatefulWidget {
 }
 
 class _CartItemState extends State<CartItem> {
-  //remove item from cart
+  // Remove item from cart
   void removeItemFromCart() {
     Provider.of<Cart>(context, listen: false).removeItemFromCart(widget.shoe);
   }
@@ -34,17 +34,16 @@ class _CartItemState extends State<CartItem> {
           aspectRatio: 1.7,
           child: Image.asset(widget.shoe.imagePath, fit: BoxFit.cover),
         ),
-        title: Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(widget.shoe.name, style: const TextStyle(fontSize: 14)),
-              Text(widget.shoe.price, style: const TextStyle(fontSize: 14)),
-            ],
-          ),
+        title: Text(
+          widget.shoe.name,
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        subtitle: Text(
+          'R\$ ${widget.shoe.price}',
+          style: const TextStyle(fontSize: 14, color: Colors.grey),
         ),
         trailing: IconButton(
-          icon: Icon(Icons.delete),
+          icon: const Icon(Icons.delete, color: Colors.red),
           onPressed: removeItemFromCart,
         ),
       ),
