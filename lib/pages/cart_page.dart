@@ -25,6 +25,11 @@ class CartPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
+            if (value.getUserCart().isEmpty)
+              const Text(
+                'Seu carrinho está vazio',
+                style: TextStyle(fontSize: 18, color: Colors.grey),
+              ),
 
             Expanded(
               child: ListView.builder(
