@@ -14,9 +14,12 @@ class ShoeTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //screen size
+    final size = MediaQuery.of(context).size;
     return Container(
       margin: EdgeInsets.only(left: 25),
       width: 280,
+      height: size.height * 0.5,
       decoration: BoxDecoration(
         color: Colors.grey[100],
         borderRadius: BorderRadius.circular(10),
@@ -29,7 +32,7 @@ class ShoeTile extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             child: SizedBox(
               height: 150,
-              width: 250,
+              width: size.height * 0.5,
               child: Image.asset(
                 shoe.imagePath,
                 fit: BoxFit.cover,
@@ -42,6 +45,8 @@ class ShoeTile extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child: Text(
               shoe.description,
+              maxLines: 5,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(color: Colors.grey[600]),
             ),
           ),

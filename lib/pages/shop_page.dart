@@ -12,6 +12,8 @@ class ShopPage extends StatefulWidget {
 }
 
 class _ShopPageState extends State<ShopPage> {
+  final ScrollController _scrollController = ScrollController();
+
   void addShoeToCart(Shoe shoe) {
     Provider.of<Cart>(context, listen: false).addItemToCart(shoe);
 
@@ -86,21 +88,28 @@ class _ShopPageState extends State<ShopPage> {
           ),
 
           const SizedBox(height: 10), //spacing
-
-          Expanded(
-            child: ListView.builder(
-              itemCount: 4,
+          Scrollbar(
+            controller: _scrollController,
+            thumbVisibility: true,
+            child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                //create a shoe
-                Shoe shoe = value.getShoeShop()[index];
-                return ShoeTile(
-                  shoe: shoe,
-                  onTap: () => addShoeToCart(shoe),
-                );
-              },
+              physics: const BouncingScrollPhysics(),
+              controller: _scrollController,
+              child: Row(
+                children: List.generate(
+                  value.getShoeShop().length,
+                  (index) {
+                    Shoe shoe = value.getShoeShop()[index];
+                    return ShoeTile(
+                      shoe: shoe,
+                      onTap: () => addShoeToCart(shoe),
+                    );
+                  },
+                ),
+              ),
             ),
           ),
+
           const Padding(
             padding: EdgeInsets.only(top: 25, left: 25, right: 25),
             child: Divider(
