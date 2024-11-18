@@ -1,9 +1,4 @@
 {
   "public": "build/web",
-  "rewrites": [{ "source": "/(.*)", "destination": "/" }],
-  "build": {
-    "env": {
-      "Teste": "@TESTE"
-    }
-  }
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
 }
