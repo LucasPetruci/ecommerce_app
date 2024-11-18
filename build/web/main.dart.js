@@ -6848,7 +6848,7 @@ _.a=d},
 aiJ(){var s=0,r=A.R(t.H),q,p,o,n,m,l,k
 var $async$aiJ=A.S(function(a,b){if(a===1)return A.O(b,r)
 while(true)switch(s){case 0:s=2
-return A.V($.amn().wi("/.env"),$async$aiJ)
+return A.V($.amn().wi("../.env"),$async$aiJ)
 case 2:if($.J==null)A.al1()
 q=$.J
 q.toString
