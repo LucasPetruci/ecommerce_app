@@ -9,9 +9,9 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter/foundation.dart';
 
 Future<void> main() async {
-  if (!kReleaseMode) {
-    await dotenv.load(fileName: "../.env");
-  }
+  // if (!kReleaseMode) {
+  //   await dotenv.load(fileName: "../.env");
+  // }
   runApp(const MyApp());
 }
 
