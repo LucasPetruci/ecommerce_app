@@ -8,7 +8,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 
 Future<void> main() async {
-  await dotenv.load(fileName: "/.env");
+  await dotenv.load(fileName: "../.env");
   runApp(const MyApp());
 }
 
@@ -17,7 +17,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Configurar as rotas do GoRouter
     final GoRouter _router = GoRouter(
       routes: [
         GoRoute(
@@ -25,7 +24,7 @@ class MyApp extends StatelessWidget {
           builder: (context, state) => const IntroPage(),
         ),
         GoRoute(
-          path: '/productDetails', // Rota para detalhes do produto
+          path: '/productDetails',
           builder: (context, state) {
             final shoe = state.extra as Shoe;
             return ProductDetails(shoe: shoe);
@@ -38,7 +37,7 @@ class MyApp extends StatelessWidget {
       create: (context) => Cart(),
       builder: (context, child) => MaterialApp.router(
         debugShowCheckedModeBanner: false,
-        routerConfig: _router, // Integrar GoRouter ao MaterialApp
+        routerConfig: _router,
       ),
     );
   }
