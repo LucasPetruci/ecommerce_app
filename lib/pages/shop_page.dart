@@ -107,7 +107,7 @@ class _ShopPageState extends State<ShopPage> {
                       shoe: shoe,
                       onTap: () => addShoeToCart(shoe),
                       goToDetails: () {
-                        context.go(
+                        context.push(
                           '/productDetails',
                           extra: shoe,
                         );
