@@ -6,9 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter/foundation.dart';
 
 Future<void> main() async {
-  await dotenv.load(fileName: "../.env");
+  if (!kReleaseMode) {
+    await dotenv.load(fileName: "../.env");
+  }
   runApp(const MyApp());
 }
 

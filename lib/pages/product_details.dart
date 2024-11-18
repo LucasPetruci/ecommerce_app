@@ -9,7 +9,7 @@ class ProductDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final teste = dotenv.env['TESTE'] ?? 'Valor padrão';
+    const teste = String.fromEnvironment('TESTE', defaultValue: 'Valor padrão');
 
     return Scaffold(
       appBar: AppBar(
