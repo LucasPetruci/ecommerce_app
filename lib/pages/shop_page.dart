@@ -1,7 +1,10 @@
 import 'package:ecommerce_app/components/shoe_tile.dart';
+import 'package:ecommerce_app/main.dart';
 import 'package:ecommerce_app/models/cart.dart';
 import 'package:ecommerce_app/models/shoe.dart';
+import 'package:ecommerce_app/pages/product_details.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class ShopPage extends StatefulWidget {
@@ -103,6 +106,12 @@ class _ShopPageState extends State<ShopPage> {
                     return ShoeTile(
                       shoe: shoe,
                       onTap: () => addShoeToCart(shoe),
+                      goToDetails: () {
+                        context.go(
+                          '/productDetails',
+                          extra: shoe,
+                        );
+                      },
                     );
                   },
                 ),
