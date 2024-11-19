@@ -1,11 +1,11 @@
 import 'package:ecommerce_app/components/shoe_tile.dart';
-import 'package:ecommerce_app/main.dart';
 import 'package:ecommerce_app/models/cart.dart';
 import 'package:ecommerce_app/models/shoe.dart';
-import 'package:ecommerce_app/pages/product_details.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+
+import '../components/scrollBehaviorModified.dart';
 
 class ShopPage extends StatefulWidget {
   const ShopPage({super.key});
@@ -91,29 +91,32 @@ class _ShopPageState extends State<ShopPage> {
           ),
 
           const SizedBox(height: 10), //spacing
-          Scrollbar(
-            controller: _scrollController,
-            thumbVisibility: true,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              physics: const BouncingScrollPhysics(),
+          ScrollConfiguration(
+            behavior: ScrollBehaviorModified(),
+            child: Scrollbar(
               controller: _scrollController,
-              child: Row(
-                children: List.generate(
-                  value.getShoeShop().length,
-                  (index) {
-                    Shoe shoe = value.getShoeShop()[index];
-                    return ShoeTile(
-                      shoe: shoe,
-                      onTap: () => addShoeToCart(shoe),
-                      goToDetails: () {
-                        context.push(
-                          '/productDetails',
-                          extra: shoe,
-                        );
-                      },
-                    );
-                  },
+              thumbVisibility: true,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                physics: const BouncingScrollPhysics(),
+                controller: _scrollController,
+                child: Row(
+                  children: List.generate(
+                    value.getShoeShop().length,
+                    (index) {
+                      Shoe shoe = value.getShoeShop()[index];
+                      return ShoeTile(
+                        shoe: shoe,
+                        onTap: () => addShoeToCart(shoe),
+                        goToDetails: () {
+                          context.push(
+                            '/productDetails',
+                            extra: shoe,
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
