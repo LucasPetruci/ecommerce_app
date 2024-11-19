@@ -7,8 +7,8 @@ import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/foundation.dart';
-
 import 'components/scrollBehaviorModified.dart';
+import 'pages/home_page.dart';
 
 Future<void> main() async {
   // if (!kReleaseMode) {
@@ -33,6 +33,13 @@ class MyApp extends StatelessWidget {
           builder: (context, state) {
             final shoe = state.extra as Shoe;
             return ProductDetails(shoe: shoe);
+          },
+        ),
+        GoRoute(
+          path: '/homePage',
+          builder: (context, state) {
+            final index = state.extra as int?;
+            return HomePage(indexNav: index ?? 0);
           },
         ),
       ],
