@@ -64,12 +64,27 @@ class ProductDetails extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(
-                  height: 50,
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: GestureDetector(
+                      onTap: () {
+                        context.go('/homePage', extra: 1);
+                      },
+                      child: const Icon(
+                        Icons.shopping_bag_rounded,
+                      ),
+                    ),
+                  ),
                 ),
-                Container(
-                  child: Image.asset(shoe.imagePath,
-                      height: 300, width: size.width),
+                const SizedBox(
+                  height: 20,
+                ),
+                Image.asset(
+                  shoe.imagePath,
+                  height: 300,
+                  width: size.width,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
