@@ -18,7 +18,7 @@ class CartPage extends StatelessWidget {
           children: [
             //heading
             const Text(
-              'My Cart',
+              'Carrinho',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 24,
