@@ -4,7 +4,8 @@ import 'package:ecommerce_app/pages/shop_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final int indexNav;
+  const HomePage({super.key, this.indexNav = 0});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -12,14 +13,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   //this selected index is to control the bottom navigation bar
-  int _selectedIndex = 0;
-
-  // this method will update our selected index
-  void navigateBottomBar(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  late int _selectedIndex;
 
   final List<Widget> _pages = [
     //shop page
@@ -30,11 +24,25 @@ class _HomePageState extends State<HomePage> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.indexNav;
+  }
+
+  // this method will update our selected index
+  void navigateBottomBar(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       bottomNavigationBar: MyBottomNavBar(
         onTabChange: (index) => navigateBottomBar(index),
+        currentIndex: _selectedIndex,
       ),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
