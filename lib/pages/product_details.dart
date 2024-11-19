@@ -72,8 +72,38 @@ class ProductDetails extends StatelessWidget {
                       onTap: () {
                         context.go('/homePage', extra: 1);
                       },
-                      child: const Icon(
-                        Icons.shopping_bag_rounded,
+                      child: Stack(
+                        children: [
+                          const Icon(
+                            Icons.shopping_bag_rounded,
+                            size: 30,
+                          ),
+                          Positioned(
+                              right: 0,
+                              top: 0,
+                              child: Consumer<Cart>(
+                                builder: (context, cart, child) {
+                                  final itemCount = cart.getUserCart().length;
+                                  return itemCount > 0
+                                      ? Container(
+                                          padding: const EdgeInsets.all(4),
+                                          decoration: const BoxDecoration(
+                                            color: Colors.red,
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: Text(
+                                            itemCount.toString(),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        )
+                                      : const SizedBox();
+                                },
+                              )),
+                        ],
                       ),
                     ),
                   ),
@@ -202,7 +232,7 @@ class ProductDetails extends StatelessWidget {
                                       goToDetails: () {
                                         context.push(
                                           '/productDetails',
-                                          extra: shoe,
+                                          extra: otherShoe,
                                         );
                                       },
                                     );
