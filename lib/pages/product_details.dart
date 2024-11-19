@@ -65,7 +65,7 @@ class ProductDetails extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(
-                  height: 100,
+                  height: 50,
                 ),
                 Container(
                   child: Image.asset(shoe.imagePath,
