@@ -8,6 +8,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/foundation.dart';
 
+import 'components/scrollBehaviorModified.dart';
+
 Future<void> main() async {
   // if (!kReleaseMode) {
   //   await dotenv.load(fileName: "../.env");
@@ -38,9 +40,12 @@ class MyApp extends StatelessWidget {
 
     return ChangeNotifierProvider(
       create: (context) => Cart(),
-      builder: (context, child) => MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        routerConfig: _router,
+      builder: (context, child) => ScrollConfiguration(
+        behavior: ScrollBehaviorModified(),
+        child: MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          routerConfig: _router,
+        ),
       ),
     );
   }
