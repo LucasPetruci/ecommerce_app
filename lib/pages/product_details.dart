@@ -108,12 +108,9 @@ class ProductDetails extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
                 Image.asset(
                   shoe.imagePath,
-                  height: 300,
+                  height: size.height * 0.3,
                   width: size.width,
                 ),
                 Padding(
