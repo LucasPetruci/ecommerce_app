@@ -1,10 +1,12 @@
 import 'package:ecommerce_app/models/cart.dart';
 import 'package:ecommerce_app/models/shoe.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../components/scrollBehaviorModified.dart';
 import '../components/shoe_tile.dart';
 
@@ -35,6 +37,16 @@ class ProductDetails extends StatelessWidget {
           content: Text('Check your cart'),
         ),
       );
+    }
+
+    void handleNavigateCepPage() async {
+      const url =
+          'https://buscacepinter.correios.com.br/app/endereco/index.php';
+      if (await canLaunchUrl(Uri.parse(url))) {
+        await launchUrl(Uri.parse(url));
+      } else {
+        throw 'Could not launch $url';
+      }
     }
 
     return Scaffold(
@@ -115,47 +127,117 @@ class ProductDetails extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Row(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "R\$ ${price.toStringAsFixed(2)}",
-                        style: const TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
-                      ),
-                      Spacer(),
-                      //button
-                      ElevatedButton(
-                        onPressed: () {
-                          //add shoe to cart
-                          Provider.of<Cart>(context, listen: false)
-                              .addItemToCart(shoe);
-                          //alert the user, shoe successfully added to cart
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title:
-                                  Text('${shoe.name} adicionado com sucesso!'),
-                              content: const Text('Verifique seu carrinho'),
-                            ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.black,
-                          minimumSize: const Size(10, 60),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                      Row(
+                        children: [
+                          Text(
+                            "R\$ ${price.toStringAsFixed(2)}",
+                            style: const TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.bold),
                           ),
-                        ),
-                        child: const Row(
-                          children: [
-                            Icon(Icons.shopping_cart, color: Colors.white),
-                            SizedBox(width: 10),
-                            Text(
-                              'Adicionar ao carrinho',
-                              style: TextStyle(color: Colors.white),
+                          const Spacer(),
+                          //button
+                          ElevatedButton(
+                            onPressed: () {
+                              //add shoe to cart
+                              Provider.of<Cart>(context, listen: false)
+                                  .addItemToCart(shoe);
+                              //alert the user, shoe successfully added to cart
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  title: Text(
+                                      '${shoe.name} adicionado com sucesso!'),
+                                  content: const Text('Verifique seu carrinho'),
+                                ),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.black,
+                              minimumSize: const Size(10, 60),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
                             ),
-                          ],
-                        ),
+                            child: const Row(
+                              children: [
+                                Icon(Icons.shopping_cart, color: Colors.white),
+                                SizedBox(width: 10),
+                                Text(
+                                  'Adicionar ao carrinho',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 10),
+                                const Text(
+                                  "Calcule o frete",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  textAlign: TextAlign.left,
+                                ),
+                                SizedBox(
+                                  height: 50,
+                                  width: size.width * 0.5,
+                                  child: TextField(
+                                    decoration: InputDecoration(
+                                      hintText: '00000-000',
+                                      border: const OutlineInputBorder(),
+                                      suffixIcon: Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 10),
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.white,
+                                          ),
+                                          onPressed: () {
+                                            // Atualizar o valor do frete
+                                            print('Calcular');
+                                          },
+                                          child: const Text(
+                                            'Calcular',
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    keyboardType: TextInputType.number,
+                                  ),
+                                ),
+                                RichText(
+                                  text: TextSpan(
+                                    text: 'Não sei meu CEP',
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () async {
+                                        //navigate to the CEP page
+                                        handleNavigateCepPage();
+                                      },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Text("opçoes de fretes"),
+                        ],
                       ),
                     ],
                   ),
