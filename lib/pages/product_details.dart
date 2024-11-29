@@ -174,69 +174,63 @@ class ProductDetails extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Row(
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(height: 10),
-                                const Text(
-                                  "Calcule o frete",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  textAlign: TextAlign.left,
-                                ),
-                                SizedBox(
-                                  height: 50,
-                                  width: size.width * 0.5,
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                      hintText: '00000-000',
-                                      border: const OutlineInputBorder(),
-                                      suffixIcon: Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 10),
-                                        child: ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.white,
-                                          ),
-                                          onPressed: () {
-                                            // Atualizar o valor do frete
-                                            print('Calcular');
-                                          },
-                                          child: const Text(
-                                            'Calcular',
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ),
+                          const SizedBox(height: 10),
+                          const Text(
+                            "Calcule o frete",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                          const SizedBox(height: 10),
+                          SizedBox(
+                            height: 50,
+                            width: size.width * 0.7,
+                            child: TextField(
+                              decoration: InputDecoration(
+                                hintText: '00000-000',
+                                border: const OutlineInputBorder(),
+                                suffixIcon: Padding(
+                                  padding: const EdgeInsets.only(right: 10),
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.white,
+                                    ),
+                                    onPressed: () {
+                                      // Atualizar o valor do frete
+                                      print('Calcular');
+                                    },
+                                    child: const Text(
+                                      'Calcular',
+                                      style: TextStyle(
+                                        color: Colors.black,
                                       ),
                                     ),
-                                    keyboardType: TextInputType.number,
                                   ),
                                 ),
-                                RichText(
-                                  text: TextSpan(
-                                    text: 'Não sei meu CEP',
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      decoration: TextDecoration.underline,
-                                    ),
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () async {
-                                        //navigate to the CEP page
-                                        handleNavigateCepPage();
-                                      },
-                                  ),
-                                ),
-                              ],
+                              ),
+                              keyboardType: TextInputType.number,
                             ),
                           ),
-                          Text("opçoes de fretes"),
+                          const SizedBox(height: 10),
+                          RichText(
+                            text: TextSpan(
+                              text: 'Não sei meu CEP',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                decoration: TextDecoration.underline,
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () async {
+                                  //navigate to the CEP page
+                                  handleNavigateCepPage();
+                                },
+                            ),
+                          ),
                         ],
                       ),
                     ],
