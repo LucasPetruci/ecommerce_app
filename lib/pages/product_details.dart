@@ -1,12 +1,15 @@
+import 'package:ecommerce_app/components/input_formatters.dart';
 import 'package:ecommerce_app/models/cart.dart';
 import 'package:ecommerce_app/models/shoe.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../components/dialog_cep.dart';
 import '../components/scrollBehaviorModified.dart';
 import '../components/shoe_tile.dart';
 
@@ -19,10 +22,11 @@ class ProductDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     double price = double.parse(shoe.price);
     final ScrollController _scrollController = ScrollController();
+    final TextEditingController cepController = TextEditingController();
 
-    final String teste = kReleaseMode
-        ? const String.fromEnvironment('TESTE', defaultValue: 'Valor padrão')
-        : dotenv.env['TESTE'] ?? 'Valor local';
+    // final String teste = kReleaseMode
+    //     ? const String.fromEnvironment('TESTE', defaultValue: 'Valor padrão')
+    //     : dotenv.env['TESTE'] ?? 'Valor local';
     //screen size
     final size = MediaQuery.of(context).size;
 
@@ -191,6 +195,11 @@ class ProductDetails extends StatelessWidget {
                             height: 50,
                             width: size.width * 0.7,
                             child: TextField(
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(9),
+                                InputFormatters(formatter: formatCep),
+                              ],
+                              controller: cepController,
                               decoration: InputDecoration(
                                 hintText: '00000-000',
                                 border: const OutlineInputBorder(),
@@ -201,8 +210,9 @@ class ProductDetails extends StatelessWidget {
                                       backgroundColor: Colors.white,
                                     ),
                                     onPressed: () {
-                                      // Atualizar o valor do frete
-                                      print('Calcular');
+                                      String cep = cepController.text
+                                          .replaceAll(RegExp(r'-'), '');
+                                      DialogCep.showCepDialog(context, cep);
                                     },
                                     child: const Text(
                                       'Calcular',
