@@ -4,9 +4,12 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class MelhorEnvioService {
-  final String baseUrl = dotenv.env['MELHOR_ENVIO_URL'] ?? '';
+  // final String baseUrl = dotenv.env['MELHOR_ENVIO_URL'] ?? '';
+  final String baseUrl = const String.fromEnvironment('MELHOR_ENVIO_URL');
 
-  final String fromPostalCode = dotenv.env['FROM_POSTAL_CODE'] ?? '';
+  // final String fromPostalCode = dotenv.env['FROM_POSTAL_CODE'] ?? '';
+  final String fromPostalCode =
+      const String.fromEnvironment('FROM_POSTAL_CODE');
 
   Future<String> shipmentCalculate({
     required String toPostalCode,
