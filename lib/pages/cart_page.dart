@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../components/cart_item.dart';
+import '../components/scrollBehaviorModified.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
@@ -31,18 +32,37 @@ class CartPage extends StatelessWidget {
                 style: TextStyle(fontSize: 18, color: Colors.grey),
               ),
 
-            Expanded(
-              child: ListView.builder(
-                itemCount: value.getUserCart().length,
-                itemBuilder: (context, index) {
-                  //get individual shoe
-                  Shoe individualShoe = value.getUserCart()[index];
+            ScrollConfiguration(
+              behavior: ScrollBehaviorModified(),
+              child: Expanded(
+                child: ListView.builder(
+                  itemCount: value.getUserCart().length,
+                  itemBuilder: (context, index) {
+                    //get individual shoe
+                    Shoe individualShoe = value.getUserCart()[index];
 
-                  //return the cart item
-                  return CartItem(shoe: individualShoe);
-                },
+                    //return the cart item
+                    return CartItem(shoe: individualShoe);
+                  },
+                ),
               ),
             ),
+            const Divider(
+              thickness: 1,
+              color: Colors.grey,
+            ),
+            // Campo para frete
+            TextField(
+              decoration: const InputDecoration(
+                hintText: 'Calcular frete',
+                border: OutlineInputBorder(),
+              ),
+              keyboardType: TextInputType.number,
+              onChanged: (value) {
+                // Atualizar o valor do frete
+              },
+            ),
+            const SizedBox(height: 10),
             Text(
               'Total: R\$ ${value.getTotalPrice()}',
               style: const TextStyle(
@@ -50,6 +70,7 @@ class CartPage extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            const SizedBox(height: 20),
           ],
         ),
       ),
