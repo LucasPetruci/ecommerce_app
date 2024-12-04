@@ -24,10 +24,10 @@ class MelhorEnvioService {
         'postal_code': toPostalCode,
       },
       'package': {
-        'weight': dotenv.env['PACKAGE_WEIGHT'] ?? '1',
-        'length': dotenv.env['PACKAGE_LENGTH'] ?? '16',
-        'height': dotenv.env['PACKAGE_HEIGHT'] ?? '2',
-        'width': dotenv.env['PACKAGE_WIDTH'] ?? '11',
+        'weight': '4',
+        'length': '17',
+        'height': '0.3',
+        'width': '12',
       },
     };
 
