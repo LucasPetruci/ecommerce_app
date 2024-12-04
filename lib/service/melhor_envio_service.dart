@@ -5,11 +5,11 @@ import 'package:http/http.dart' as http;
 
 class MelhorEnvioService {
   // final String baseUrl = dotenv.env['MELHOR_ENVIO_URL'] ?? '';
-  final String baseUrl = const String.fromEnvironment('MELHOR_ENVIO_URL');
+  final String baseUrl = 'https://melhor-envio-rosy.vercel.app/api/proxy';
 
   // final String fromPostalCode = dotenv.env['FROM_POSTAL_CODE'] ?? '';
   final String fromPostalCode =
-      const String.fromEnvironment('FROM_POSTAL_CODE');
+      '01001-000'; // CEP da agência dos correios de São Paulo
 
   Future<String> shipmentCalculate({
     required String toPostalCode,
