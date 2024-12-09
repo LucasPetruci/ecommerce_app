@@ -1,9 +1,11 @@
+import 'package:ecommerce_app/controller/melhor_envio_controller.dart';
 import 'package:ecommerce_app/models/cart.dart';
 import 'package:ecommerce_app/models/shoe.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../components/cart_item.dart';
+import '../components/dialog_cep.dart';
 import '../components/scrollBehaviorModified.dart';
 
 class CartPage extends StatelessWidget {
@@ -11,9 +13,11 @@ class CartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MelhorEnvioController melhorEnvioController =
+        Provider.of<MelhorEnvioController>(context);
     return Consumer<Cart>(
       builder: (context, value, child) => Padding(
-        padding: EdgeInsets.symmetric(horizontal: 25.0),
+        padding: const EdgeInsets.symmetric(horizontal: 25.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -51,18 +55,26 @@ class CartPage extends StatelessWidget {
               thickness: 1,
               color: Colors.grey,
             ),
-            // Campo para frete
-            TextField(
-              decoration: const InputDecoration(
-                hintText: 'Calcular frete',
-                border: OutlineInputBorder(),
-              ),
-              keyboardType: TextInputType.number,
-              onChanged: (value) {
-                // Atualizar o valor do frete
-              },
-            ),
             const SizedBox(height: 10),
+            Row(
+              children: [
+                Text(
+                  'Frete: R\$ ${value.deliveryPrice}',
+                  style: const TextStyle(fontSize: 20),
+                ),
+                const Spacer(),
+                ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => DialogCep(
+                          cep: melhorEnvioController.currentPostalCode),
+                    );
+                  },
+                  child: const Text('Trocar Frete'),
+                ),
+              ],
+            ),
             Text(
               'Total: R\$ ${value.getTotalPrice()}',
               style: const TextStyle(
