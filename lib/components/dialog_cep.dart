@@ -1,11 +1,12 @@
 import 'package:ecommerce_app/controller/melhor_envio_controller.dart';
+import 'package:ecommerce_app/models/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DialogCep extends StatefulWidget {
-  final String cep;
+  final String? cep;
 
-  const DialogCep({super.key, required this.cep});
+  const DialogCep({super.key, this.cep});
 
   static void showCepDialog(BuildContext context, String cep) {
     showDialog(
@@ -20,6 +21,8 @@ class DialogCep extends StatefulWidget {
 
 class _DialogCepState extends State<DialogCep> {
   String? selectedOption;
+  String? errorMessage;
+
   late final MelhorEnvioController melhorEnvioController;
 
   @override
@@ -32,7 +35,7 @@ class _DialogCepState extends State<DialogCep> {
     melhorEnvioController.addListener(_onShipmentOptionsUpdated);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      melhorEnvioController.shipmentCalculate(toPostalCode: widget.cep);
+      melhorEnvioController.shipmentCalculate(toPostalCode: widget.cep ?? '');
     });
   }
 
@@ -55,21 +58,22 @@ class _DialogCepState extends State<DialogCep> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: const Text('Opções de frete'),
-      content: Builder(
-        builder: (context) {
-          if (melhorEnvioController.isLoading) {
-            return const Center(child: CircularProgressIndicator());
-          } else {
-            return SizedBox(
-              height: MediaQuery.of(context).size.height * 0.25,
-              width: double.maxFinite,
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: melhorEnvioController.shipmentOptions.length,
-                itemBuilder: (context, index) {
-                  final option = melhorEnvioController.shipmentOptions[index];
+    final cart = Provider.of<Cart>(context);
+
+    if (melhorEnvioController.isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    } else if (melhorEnvioController.shipmentOptions.isEmpty) {
+      return const Center(child: Text('Nenhuma opção de frete disponível.'));
+    } else {
+      return AlertDialog(
+        title: const Text('Opções de frete'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IntrinsicHeight(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: melhorEnvioController.shipmentOptions.map((option) {
                   return RadioListTile(
                     title: Text(
                         '${option.name}  Preço: R\$ ${option.price} Prazo: ${option.deliveryTime} dias'),
@@ -78,23 +82,58 @@ class _DialogCepState extends State<DialogCep> {
                     onChanged: (value) {
                       setState(() {
                         selectedOption = value;
+                        errorMessage = null;
                       });
                     },
                   );
-                },
+                }).toList(),
               ),
-            );
-          }
-        },
-      ),
-      actions: <Widget>[
-        TextButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text('OK'),
+            ),
+            if (errorMessage != null)
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Text(
+                  errorMessage!,
+                  style: const TextStyle(color: Colors.red),
+                ),
+              ),
+          ],
         ),
-      ],
-    );
+        actions: <Widget>[
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('Cancelar'),
+              ),
+              TextButton(
+                onPressed: () {
+                  // check if user has selected an option
+                  if (selectedOption == null) {
+                    setState(() {
+                      errorMessage = 'Por favor, selecione uma opção de frete.';
+                    });
+                    return;
+                  }
+
+                  final selectedOptionData = melhorEnvioController
+                      .shipmentOptions
+                      .firstWhere((option) => option.name == selectedOption);
+
+                  // add delivery price to cart
+                  cart.addDeliveryPrice(selectedOptionData.price);
+
+                  Navigator.pop(context);
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        ],
+      );
+    }
   }
 }
