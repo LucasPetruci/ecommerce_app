@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:ecommerce_app/models/melhor_envio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
@@ -11,7 +12,7 @@ class MelhorEnvioService {
   final String fromPostalCode =
       '01001-000'; // CEP da agência dos correios de São Paulo
 
-  Future<String> shipmentCalculate({
+  Future<List<MelhorEnvio>> shipmentCalculate({
     required String toPostalCode,
   }) async {
     final headers = {
@@ -42,8 +43,9 @@ class MelhorEnvioService {
         body: jsonEncode(body),
       );
       if (response.statusCode == 200) {
-        print('Resposta do proxy: ${response.body}');
-        return response.body;
+        final List<dynamic> data = jsonDecode(response.body);
+        print('Resposta do proxy: $data');
+        return data.map((e) => MelhorEnvio.fromJson(e)).toList();
       } else {
         print('Erro do proxy: ${response.body}');
         throw Exception(
