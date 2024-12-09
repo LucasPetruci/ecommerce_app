@@ -36,11 +36,11 @@ class Cart extends ChangeNotifier {
   ];
 
   //list of items in user cart
-
   List<Shoe> userCart = [];
 
-  //get list of shoes for sale
+  double deliveryPrice = 0.0;
 
+  //get list of shoes for sale
   List<Shoe> getShoeShop() {
     return shoeShop;
   }
@@ -56,6 +56,7 @@ class Cart extends ChangeNotifier {
     for (var shoe in userCart) {
       total += double.parse(shoe.price);
     }
+    total += deliveryPrice;
     return total.toString();
   }
 
@@ -68,6 +69,23 @@ class Cart extends ChangeNotifier {
   //remove items from cart
   void removeItemFromCart(Shoe shoe) {
     userCart.remove(shoe);
+    notifyListeners();
+  }
+
+  //add delivery price to total
+  void addDeliveryPrice(String price) {
+    deliveryPrice = double.parse(price);
+    notifyListeners();
+  }
+
+  //get delivery price
+  double getDeliveryPrice() {
+    return deliveryPrice;
+  }
+
+  //clear delivery price
+  void clearDeliveryPrice() {
+    deliveryPrice = 0.0;
     notifyListeners();
   }
 }
