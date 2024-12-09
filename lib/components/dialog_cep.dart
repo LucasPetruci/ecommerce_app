@@ -75,8 +75,17 @@ class _DialogCepState extends State<DialogCep> {
             itemBuilder: (context, index) {
               final option = melhorEnvioController.shipmentOptions[index];
               return RadioListTile(
-                title: Text(
-                    '${option.name}  Preço: R\$ ${option.price} Prazo: ${option.deliveryTime} dias'),
+                title: RichText(
+                    text: TextSpan(
+                  text: '${option.deliveryTime.toString()} dias úteis ',
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  children: [
+                    TextSpan(
+                      text: 'R\$ ${option.price} ${option.name}',
+                      style: const TextStyle(fontWeight: FontWeight.normal),
+                    ),
+                  ],
+                )),
                 value: option.name,
                 groupValue: selectedOption,
                 onChanged: (value) {
