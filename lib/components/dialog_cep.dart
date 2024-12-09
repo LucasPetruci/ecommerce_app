@@ -67,37 +67,27 @@ class _DialogCepState extends State<DialogCep> {
     } else {
       return AlertDialog(
         title: const Text('Opções de frete'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            IntrinsicHeight(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: melhorEnvioController.shipmentOptions.map((option) {
-                  return RadioListTile(
-                    title: Text(
-                        '${option.name}  Preço: R\$ ${option.price} Prazo: ${option.deliveryTime} dias'),
-                    value: option.name,
-                    groupValue: selectedOption,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedOption = value;
-                        errorMessage = null;
-                      });
-                    },
-                  );
-                }).toList(),
-              ),
-            ),
-            if (errorMessage != null)
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Text(
-                  errorMessage!,
-                  style: const TextStyle(color: Colors.red),
-                ),
-              ),
-          ],
+        content: SizedBox(
+          width: double.maxFinite,
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: melhorEnvioController.shipmentOptions.length,
+            itemBuilder: (context, index) {
+              final option = melhorEnvioController.shipmentOptions[index];
+              return RadioListTile(
+                title: Text(
+                    '${option.name}  Preço: R\$ ${option.price} Prazo: ${option.deliveryTime} dias'),
+                value: option.name,
+                groupValue: selectedOption,
+                onChanged: (value) {
+                  setState(() {
+                    selectedOption = value;
+                    errorMessage = null;
+                  });
+                },
+              );
+            },
+          ),
         ),
         actions: <Widget>[
           Row(
@@ -111,7 +101,6 @@ class _DialogCepState extends State<DialogCep> {
               ),
               TextButton(
                 onPressed: () {
-                  // check if user has selected an option
                   if (selectedOption == null) {
                     setState(() {
                       errorMessage = 'Por favor, selecione uma opção de frete.';
@@ -123,7 +112,7 @@ class _DialogCepState extends State<DialogCep> {
                       .shipmentOptions
                       .firstWhere((option) => option.name == selectedOption);
 
-                  // add delivery price to cart
+                  // Adiciona o preço do frete ao carrinho
                   cart.addDeliveryPrice(selectedOptionData.price);
 
                   Navigator.pop(context);
@@ -132,6 +121,14 @@ class _DialogCepState extends State<DialogCep> {
               ),
             ],
           ),
+          if (errorMessage != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Text(
+                errorMessage!,
+                style: const TextStyle(color: Colors.red),
+              ),
+            ),
         ],
       );
     }
