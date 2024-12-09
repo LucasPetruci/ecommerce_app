@@ -1,32 +1,30 @@
-import 'dart:convert';
+import 'package:flutter/material.dart';
 
+import '../models/melhor_envio.dart';
 import '../service/melhor_envio_service.dart';
 
-class MelhorEnvioController {
-  final MelhorEnvioService _melhorEnvioService = MelhorEnvioService();
+class MelhorEnvioController with ChangeNotifier {
+  List<MelhorEnvio> _shipmentOptions = [];
+  bool _isLoading = false;
 
-  Future<List<Map<String, dynamic>>> shipmentCalculate(
-      {required String toPostalCode}) async {
+  List<MelhorEnvio> get shipmentOptions => _shipmentOptions;
+  bool get isLoading => _isLoading;
+  MelhorEnvioService melhorEnvioService = MelhorEnvioService();
+
+  Future<void> shipmentCalculate({required String toPostalCode}) async {
+    if (_isLoading) return;
+    _isLoading = true;
+    notifyListeners();
     try {
-      final result = await _melhorEnvioService.shipmentCalculate(
+      final options = await melhorEnvioService.shipmentCalculate(
           toPostalCode: toPostalCode);
-
-      final List<dynamic> response = jsonDecode(result);
-
-      final List<Map<String, dynamic>> shippingOptions = response.map((option) {
-        return {
-          'name': option['name'] ?? 'Nome não disponível',
-          'picture': option['company']?['picture'] ??
-              'https://via.placeholder.com/150',
-          'price': option['price'] ?? 'Preço não disponível',
-          'delivery_time': option['delivery_time'] ?? 'Tempo não disponível',
-        };
-      }).toList();
-
-      return shippingOptions;
+      print('Options: $options');
+      _shipmentOptions = options;
     } catch (e) {
-      print(e);
-      return [];
+      print('Erro ao calcular frete: $e');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
   }
 }
