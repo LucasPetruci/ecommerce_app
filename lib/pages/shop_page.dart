@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/components/search_bar.dart';
 import 'package:ecommerce_app/components/shoe_tile.dart';
 import 'package:ecommerce_app/models/cart.dart';
 import 'package:ecommerce_app/models/shoe.dart';
@@ -16,6 +17,32 @@ class ShopPage extends StatefulWidget {
 
 class _ShopPageState extends State<ShopPage> {
   final ScrollController _scrollController = ScrollController();
+  final TextEditingController _searchController = TextEditingController();
+
+  List<Shoe> _filteredShoes = [];
+
+  @override
+  void initState() {
+    super.initState();
+    final cart = Provider.of<Cart>(context, listen: false);
+    _filteredShoes = cart.getShoeShop();
+  }
+
+  //filter shoes
+  void _filterShoes(String query) {
+    final cart = Provider.of<Cart>(context, listen: false);
+    setState(() {
+      if (query.isEmpty) {
+        _filteredShoes = cart.getShoeShop();
+      } else {
+        _filteredShoes = cart
+            .getShoeShop()
+            .where(
+                (shoe) => shoe.name.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+      }
+    });
+  }
 
   void addShoeToCart(Shoe shoe) {
     Provider.of<Cart>(context, listen: false).addItemToCart(shoe);
@@ -36,26 +63,12 @@ class _ShopPageState extends State<ShopPage> {
       builder: (context, value, child) => Column(
         children: [
           //search bar
-          Container(
-            padding: const EdgeInsets.all(12),
-            margin: const EdgeInsets.symmetric(horizontal: 25),
-            decoration: BoxDecoration(
-              color: Colors.grey[100],
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Search',
-                  style: TextStyle(color: Colors.grey),
-                ),
-                Icon(
-                  Icons.search,
-                  color: Colors.grey,
-                ),
-              ],
-            ),
+          MySearchBar(
+            placeholder: 'Buscar produtos...',
+            controller: _searchController,
+            onChanged: (value) {
+              _filterShoes(value);
+            },
           ),
 
           //message
@@ -71,56 +84,55 @@ class _ShopPageState extends State<ShopPage> {
 
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 25.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  "Mais escolhidos 🔥",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-                ),
-                Text(
-                  "See all",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blue,
-                  ),
-                ),
-              ],
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Mais escolhidos 🔥",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+              ),
             ),
           ),
 
           const SizedBox(height: 10), //spacing
-          ScrollConfiguration(
-            behavior: ScrollBehaviorModified(),
-            child: Scrollbar(
-              controller: _scrollController,
-              thumbVisibility: true,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                physics: const BouncingScrollPhysics(),
+          if (_filteredShoes.isEmpty)
+            const Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Text(
+                'Nenhum produto encontrado.',
+                style: TextStyle(fontSize: 16, color: Colors.grey),
+              ),
+            )
+          else
+            ScrollConfiguration(
+              behavior: ScrollBehaviorModified(),
+              child: Scrollbar(
                 controller: _scrollController,
-                child: Row(
-                  children: List.generate(
-                    value.getShoeShop().length,
-                    (index) {
-                      Shoe shoe = value.getShoeShop()[index];
-                      return ShoeTile(
-                        shoe: shoe,
-                        onTap: () => addShoeToCart(shoe),
-                        goToDetails: () {
-                          context.push(
-                            '/productDetails',
-                            extra: shoe,
-                          );
-                        },
-                      );
-                    },
+                thumbVisibility: true,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
+                  controller: _scrollController,
+                  child: Row(
+                    children: List.generate(
+                      _filteredShoes.length,
+                      (index) {
+                        Shoe shoe = _filteredShoes[index];
+                        return ShoeTile(
+                          shoe: shoe,
+                          onTap: () => addShoeToCart(shoe),
+                          goToDetails: () {
+                            context.push(
+                              '/productDetails',
+                              extra: shoe,
+                            );
+                          },
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
 
           const Padding(
             padding: EdgeInsets.only(top: 25, left: 25, right: 25),
