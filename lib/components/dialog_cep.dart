@@ -99,45 +99,54 @@ class _DialogCepState extends State<DialogCep> {
           ),
         ),
         actions: <Widget>[
-          Row(
-            mainAxisSize: MainAxisSize.min,
+          Column(
             children: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('Cancelar'),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text(
+                      'Cancelar',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      if (selectedOption == null) {
+                        setState(() {
+                          errorMessage =
+                              'Por favor, selecione uma opção de frete.';
+                        });
+                        return;
+                      }
+
+                      final selectedOptionData =
+                          melhorEnvioController.shipmentOptions.firstWhere(
+                              (option) => option.name == selectedOption);
+
+                      // Adiciona o preço do frete ao carrinho
+                      cart.addDeliveryPrice(selectedOptionData.price);
+
+                      Navigator.pop(context);
+                    },
+                    child:
+                        const Text('OK', style: TextStyle(color: Colors.green)),
+                  ),
+                ],
               ),
-              TextButton(
-                onPressed: () {
-                  if (selectedOption == null) {
-                    setState(() {
-                      errorMessage = 'Por favor, selecione uma opção de frete.';
-                    });
-                    return;
-                  }
-
-                  final selectedOptionData = melhorEnvioController
-                      .shipmentOptions
-                      .firstWhere((option) => option.name == selectedOption);
-
-                  // Adiciona o preço do frete ao carrinho
-                  cart.addDeliveryPrice(selectedOptionData.price);
-
-                  Navigator.pop(context);
-                },
-                child: const Text('OK'),
-              ),
+              if (errorMessage != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Text(
+                    errorMessage!,
+                    style: const TextStyle(color: Colors.red),
+                  ),
+                ),
             ],
           ),
-          if (errorMessage != null)
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Text(
-                errorMessage!,
-                style: const TextStyle(color: Colors.red),
-              ),
-            ),
         ],
       );
     }
