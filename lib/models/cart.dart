@@ -57,7 +57,7 @@ class Cart extends ChangeNotifier {
       total += double.parse(shoe.price);
     }
     total += deliveryPrice;
-    return total.toString();
+    return total.toStringAsFixed(2);
   }
 
   //add items to cart

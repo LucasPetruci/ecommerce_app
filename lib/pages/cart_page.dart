@@ -59,7 +59,7 @@ class CartPage extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  'Frete: R\$ ${value.deliveryPrice}',
+                  'Frete: R\$ ${value.getDeliveryPrice().toStringAsFixed(2)}',
                   style: const TextStyle(fontSize: 20),
                 ),
                 const Spacer(),
