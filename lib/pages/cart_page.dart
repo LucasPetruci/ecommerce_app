@@ -64,6 +64,13 @@ class CartPage extends StatelessWidget {
                 ),
                 const Spacer(),
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    minimumSize: const Size(10, 60),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
                   onPressed: () {
                     showDialog(
                       context: context,
@@ -71,7 +78,10 @@ class CartPage extends StatelessWidget {
                           cep: melhorEnvioController.currentPostalCode),
                     );
                   },
-                  child: const Text('Trocar Frete'),
+                  child: const Text(
+                    'Trocar Frete',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ],
             ),
