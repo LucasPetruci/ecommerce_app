@@ -1,11 +1,9 @@
 import 'package:ecommerce_app/components/input_formatters.dart';
 import 'package:ecommerce_app/models/cart.dart';
 import 'package:ecommerce_app/models/shoe.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -21,7 +19,7 @@ class ProductDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double price = double.parse(shoe.price);
-    final ScrollController _scrollController = ScrollController();
+    final ScrollController scrollController = ScrollController();
     final TextEditingController cepController = TextEditingController();
 
     // final String teste = kReleaseMode
@@ -86,7 +84,7 @@ class ProductDetails extends StatelessWidget {
                     alignment: Alignment.topRight,
                     child: GestureDetector(
                       onTap: () {
-                        context.go('/homePage', extra: 1);
+                        context.replace('/homePage', extra: 1);
                       },
                       child: Stack(
                         children: [
@@ -286,12 +284,12 @@ class ProductDetails extends StatelessWidget {
                         return ScrollConfiguration(
                           behavior: ScrollBehaviorModified(),
                           child: Scrollbar(
-                            controller: _scrollController,
+                            controller: scrollController,
                             thumbVisibility: true,
                             child: SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
                               physics: const BouncingScrollPhysics(),
-                              controller: _scrollController,
+                              controller: scrollController,
                               child: Row(
                                 children: List.generate(
                                   // Filtra a lista para excluir o produto atual
