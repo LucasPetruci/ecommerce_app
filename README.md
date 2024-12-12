@@ -1,72 +1,49 @@
-# Aplicativo de E-commerce Flutter
+# 🏬 Nike Shop em Flutter
 
-Um aplicativo de e-commerce desenvolvido com **Flutter**, focado em fornecer uma experiência de compra moderna com navegação intuitiva e responsiva.
+Este é um aplicativo de e-commerce desenvolvido em Flutter, apresentando uma experiência intuitiva e moderna para compra de tênis da Nike.
 
-## Funcionalidades
+<br>
 
-- Navegação por categorias e produtos
-- Adição de produtos ao carrinho
-- Interface responsiva para diferentes tamanhos de dispositivos
+## 🚀 Funcionalidades
 
-## Tecnologias Utilizadas
+- **Adicionar ao Carrinho**: Possibilidade de adicionar e remover produtos e visualizar o carrinho em tempo real.
+- **Busca por Produtos**: Encontre produtos rapidamente através da funcionalidade de busca integrada.
+- **Cálculo de Frete por CEP**: Insira seu CEP e obtenha o cálculo do frete utilizando a [API Melhor Envio](https://docs.melhorenvio.com.br/docs/introducao-a-api).
+- **Cálculo de Preço Final**: Cálculo automático do valor total da compra, incluindo o frete.
+- **Responsividade**: Interface otimizada para diferentes tamanhos de dispositivos, garantindo uma experiência fluida.
 
-### Frontend
-- **Flutter**: Framework principal para o desenvolvimento do aplicativo.
-- **Dart**: Linguagem de programação usada para escrever o app.
+<br>
 
-### Gerenciamento de Estado
-- **Provider**: Utilizado para gerenciar o estado do aplicativo, incluindo o carrinho e os produtos.
+## 🛠️ Tecnologias Utilizadas
 
-### Navegação
-- **Google Nav Bar**: Usado para navegação no aplicativo com uma barra de navegação inferior estilizada.
+- **Flutter**: Framework para desenvolvimento multiplataforma.
+- **Dart**: Linguagem de programação utilizada pelo Flutter.
+- **Provider**: Gerenciamento de estado reativo.
+- **GoRouter**: Biblioteca para navegação declarativa.
+- **API Melhor Envio**: Integração para cálculo de frete baseado no CEP. Mais informações em [Melhor Envio](https://docs.melhorenvio.com.br/docs/introducao-a-api).
+- **HTTP**: Realização de requisições HTTP.
+- **google_nav_bar**: Barra de navegação estilizada.
+- **carousel_slider**: Carrossel para exibição de produtos.
+- **flutter_dotenv**: Gerenciamento de variáveis de ambiente.
+- **url_launcher**: Abertura de links externos no navegador.
 
-## Como Rodar o Projeto
+<br>
 
-### Pré-requisitos:
-- Ter o **Flutter** instalado ([Instruções](https://flutter.dev/docs/get-started/install))
-- Um editor de texto como **VSCode** ou **Android Studio**
+## 🌐 Demonstração
 
-### Instalar dependências:
-1. Clone este repositório:
-    ```bash
-    git clone https://github.com/LucasPetruci/ecommerce_app
-    ```
-2. Navegue até o diretório do projeto:
-    ```bash
-    cd ecommerce_app
-    ```
-3. Instale as dependências:
-    ```bash
-    flutter pub get
-    ```
+Acesse a versão online do aplicativo clicando no link abaixo:
 
-### Rodar o projeto:
-1. Inicie o aplicativo em um emulador ou dispositivo físico:
-    ```bash
-    flutter run
-    ```
+[Nike Shop](https://virtual-cell-phone.vercel.app/app/Nike%20Shop)
 
-## Estrutura de Pastas
+<br>
 
-```bash
-lib/
-│
-├── components/
-│   ├── bottom_nav_bar.dart        # Barra de navegação inferior personalizada
-│   ├── cart_item.dart             # Item de carrinho de compras
-│   └── shoe_tile.dart             # Componente para exibir um sapato
-├── images/                        # Contém imagens de produtos
-│   ├── AirJordan.png
-│   ├── kdtrey.png
-│   ├── kyrie.png
-│   ├── nike.png
-│   └── zoomfreak.png
-├── models/
-│   ├── cart.dart                  # Modelo para carrinho de compras
-│   └── shoe.dart                  # Modelo para sapato
-├── pages/
-│   ├── cart_page.dart             # Página do carrinho
-│   ├── home_page.dart             # Página inicial
-│   ├── intro_page.dart            # Página de introdução
-│   └── shop_page.dart             # Página da loja
-└── main.dart                      # Arquivo principal do app
+## 📱 Capturas de Tela
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/45ac78c9-b4cc-42d1-9dd0-96a956ca2f3c" alt="Tela 1" width="250"/>
+  <img src="https://github.com/user-attachments/assets/db38b8f1-691f-4e09-a30d-911513d58380" alt="Tela 2" width="250"/>
+  <img src="https://github.com/user-attachments/assets/600c0f00-ff32-4634-bb7e-c89bea9c4bc5" alt="Tela 3" width="250"/>
+  <img src="https://github.com/user-attachments/assets/86207f63-7718-4488-89b9-b47097bca771" alt="Tela 4" width="250"/>
+  <img src="https://github.com/user-attachments/assets/d78ba9dc-c18e-4d5c-80ca-464dc90e6f36" alt="Tela 5" width="250"/>
+  <img src="https://github.com/user-attachments/assets/b45f26fc-2baa-4814-aef5-24d70d58381d" alt="Tela 6" width="250"/>
+</p>
