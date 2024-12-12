@@ -12,6 +12,10 @@ class MelhorEnvioService {
   final String fromPostalCode =
       '01001-000'; // CEP da agência dos correios de São Paulo
 
+  final http.Client client;
+
+  MelhorEnvioService({http.Client? client}) : client = client ?? http.Client();
+
   Future<List<MelhorEnvio>> shipmentCalculate({
     required String toPostalCode,
   }) async {
@@ -21,12 +25,8 @@ class MelhorEnvioService {
     };
 
     final body = {
-      'from': {
-        'postal_code': fromPostalCode,
-      },
-      'to': {
-        'postal_code': toPostalCode,
-      },
+      'from': {'postal_code': fromPostalCode},
+      'to': {'postal_code': toPostalCode},
       'package': {
         'weight': '4',
         'length': '17',
@@ -37,14 +37,14 @@ class MelhorEnvioService {
 
     try {
       print('Body enviado ao proxy: $body');
-      final response = await http.post(
+      final response = await client.post(
         Uri.parse(baseUrl),
         headers: headers,
         body: jsonEncode(body),
       );
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
-        print('Resposta do proxy: $data');
+
         return data.map((e) => MelhorEnvio.fromJson(e)).toList();
       } else {
         print('Erro do proxy: ${response.body}');
