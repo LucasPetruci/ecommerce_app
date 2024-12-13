@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'melhor_envio_unit_test.mocks.dart';
+import 'melhor_envio_service_test.mocks.dart';
 
 @GenerateMocks([http.Client])
 void main() {
