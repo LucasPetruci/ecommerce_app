@@ -31,6 +31,7 @@ class MelhorEnvioController with ChangeNotifier {
       }).toList();
     } catch (e) {
       print('Erro ao calcular frete: $e');
+      _shipmentOptions = [];
     } finally {
       _isLoading = false;
       notifyListeners();
