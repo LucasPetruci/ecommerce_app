@@ -26,7 +26,9 @@ Este é um aplicativo de e-commerce desenvolvido em Flutter, apresentando uma ex
 - **carousel_slider**: Carrossel para exibição de produtos.
 - **flutter_dotenv**: Gerenciamento de variáveis de ambiente.
 - **url_launcher**: Abertura de links externos no navegador.
-
+- **Mockito**: Ferramenta para criação de mocks e testes unitários.
+- **Build Runner**: Ferramenta para automatizar a geração de código, como mocks para testes e serializers para manipulação de dados.
+ 
 <br>
 
 ## 🌐 Demonstração
