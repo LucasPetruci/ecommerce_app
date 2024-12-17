@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:ecommerce_app/controller/melhor_envio_controller.dart';
 import 'package:ecommerce_app/models/melhor_envio.dart';
 import 'package:ecommerce_app/service/melhor_envio_service.dart';
@@ -7,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'melhor_envio_controller.mocks.dart';
+import 'melhor_envio_controller_test.mocks.dart';
 
 @GenerateMocks([MelhorEnvioService])
 void main() {
@@ -24,14 +22,14 @@ void main() {
     });
 
     //initial state
-    test('initial state ', () {
+    test('should initialize with default values', () {
       expect(controller.shipmentOptions, []);
       expect(controller.isLoading, false);
       expect(controller.currentPostalCode, null);
     });
 
     //success test
-    test('success - shipmentCalculate', () async {
+    test('should load shipment options successfully', () async {
       //arrange
 
       final mockOptions = [
@@ -56,7 +54,7 @@ void main() {
     });
 
     //error test
-    test('failure - shipmentCalculate', () async {
+    test('should handle errors when calculating shipment options', () async {
       //arrange
       when(mockService.shipmentCalculate(toPostalCode: toPostalCode))
           .thenThrow(Exception('Erro ao calcular frete'));
