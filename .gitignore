@@ -33,7 +33,7 @@ migrate_working_dir/
 /build/
 /build/web/
 .env
-
+/coverage
 
 # Symbolication related
 app.*.symbols
